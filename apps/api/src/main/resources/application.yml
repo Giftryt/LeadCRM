@@ -1,0 +1,59 @@
+# Every value can be overridden with an environment variable (see README "Environment variables").
+server:
+  port: ${PORT:4000}
+  # Trust X-Forwarded-* from nginx / a load balancer (client IP for rate limiting, scheme).
+  forward-headers-strategy: framework
+  shutdown: graceful
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  application:
+    name: lead-tracker-api
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/leadtracker}
+    username: ${DB_USERNAME:leadtracker}
+    password: ${DB_PASSWORD:change-me}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none # the schema is owned by Flyway migrations in db/migration
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 100
+        order_inserts: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+
+app:
+  # Long random string, at least 32 characters. Generate with: openssl rand -base64 48
+  jwt-secret: ${JWT_SECRET}
+  session-ttl-hours: ${SESSION_TTL_HOURS:12}
+  # Business timezone: decides what "today" means for follow-ups.
+  timezone: ${APP_TIMEZONE:Asia/Kolkata}
+  # Send the session cookie over HTTPS only. Keep true in production.
+  cookie-secure: ${COOKIE_SECURE:false}
+  # Comma-separated web origins, only needed if the web app is served from a different origin than the API.
+  cors-origins: ${CORS_ORIGIN:}
+  login-rate-limit: ${LOGIN_RATE_LIMIT:20}
+  seed:
+    admin-email: ${SEED_ADMIN_EMAIL:}
+    admin-password: ${SEED_ADMIN_PASSWORD:}
+    admin-name: ${SEED_ADMIN_NAME:Admin}
+    sample-leads: ${SEED_SAMPLE_LEADS:false}
+
+logging:
+  level:
+    org.hibernate.SQL: warn

@@ -1,0 +1,26 @@
+{
+  "name": "lead-tracker-crm",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Lead tracker CRM: React frontend, Java Spring Boot API, PostgreSQL.",
+  "workspaces": [
+    "apps/web"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "concurrently -n api,web -c cyan,magenta \"npm run dev:api\" \"npm run dev -w apps/web\"",
+    "dev:api": "mvn -q -f apps/api/pom.xml spring-boot:run",
+    "build": "npm run build:api && npm run build -w apps/web",
+    "build:api": "mvn -B -f apps/api/pom.xml package -DskipTests",
+    "test": "npm run test:api && npm run test -w apps/web",
+    "test:api": "mvn -B -f apps/api/pom.xml verify",
+    "typecheck": "npm run typecheck -w apps/web",
+    "format": "prettier --write \"apps/web/**/*.{ts,tsx,css,json}\""
+  },
+  "devDependencies": {
+    "concurrently": "9.1.0",
+    "prettier": "3.3.3"
+  }
+}

@@ -1,0 +1,22 @@
+# Integration tests run against a real PostgreSQL database (created empty; Flyway migrates it).
+# Override with TEST_DB_URL / TEST_DB_USERNAME / TEST_DB_PASSWORD.
+spring:
+  datasource:
+    url: ${TEST_DB_URL:jdbc:postgresql://localhost:5432/leadtracker_test}
+    username: ${TEST_DB_USERNAME:postgres}
+    password: ${TEST_DB_PASSWORD:postgres}
+  main:
+    banner-mode: off
+
+app:
+  jwt-secret: test-secret-test-secret-test-secret-123
+  timezone: Asia/Kolkata
+  login-rate-limit: 100000
+  seed:
+    admin-email: ""
+    admin-password: ""
+    sample-leads: false
+
+logging:
+  level:
+    root: warn
