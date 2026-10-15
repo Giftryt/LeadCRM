@@ -1,6 +1,6 @@
 # Lead Tracker API
 
-Base path: `/api`. Requests and responses are JSON unless noted. Authenticate by signing in; the API sets an `httpOnly` session cookie. Scripts can instead send `Authorization: Bearer <token>` using the `token` returned by `/auth/login`.
+Base path: `/api`. Served by the Spring Boot app in `apps/api`. Requests and responses are JSON unless noted. Authenticate by signing in; the API sets an `httpOnly` session cookie. Scripts can instead send `Authorization: Bearer <token>` using the `token` returned by `/auth/login`.
 
 Errors always look like:
 

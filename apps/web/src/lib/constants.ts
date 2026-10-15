@@ -1,4 +1,4 @@
-// Keep in sync with apps/api/src/db/schema.ts and apps/api/src/lib/leads.ts.
+// Keep in sync with the Java enums in apps/api/src/main/java/com/leadtracker/lead/Stage.java, LeadSource.java and activity/ActivityType.java.
 
 export const STAGES = [
   { id: "NEW", label: "New", probability: 0.1 },
