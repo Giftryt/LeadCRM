@@ -2,24 +2,22 @@
   "name": "lead-tracker-crm",
   "private": true,
   "version": "0.1.0",
-  "description": "Lead tracker CRM: React frontend, Node/Express API, PostgreSQL.",
+  "description": "Lead tracker CRM: React frontend, Java Spring Boot API, PostgreSQL.",
   "workspaces": [
-    "apps/api",
     "apps/web"
   ],
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "dev": "concurrently -n api,web -c cyan,magenta \"npm run dev -w apps/api\" \"npm run dev -w apps/web\"",
-    "build": "npm run build -w apps/api && npm run build -w apps/web",
-    "typecheck": "npm run typecheck -w apps/api && npm run typecheck -w apps/web",
-    "test": "npm run test -w apps/api && npm run test -w apps/web",
-    "db:migrate": "npm run db:migrate -w apps/api",
-    "db:deploy": "npm run db:deploy -w apps/api",
-    "db:seed": "npm run db:seed -w apps/api",
-    "db:studio": "npm run db:studio -w apps/api",
-    "format": "prettier --write \"apps/**/*.{ts,tsx,css,json}\""
+    "dev": "concurrently -n api,web -c cyan,magenta \"npm run dev:api\" \"npm run dev -w apps/web\"",
+    "dev:api": "mvn -q -f apps/api/pom.xml spring-boot:run",
+    "build": "npm run build:api && npm run build -w apps/web",
+    "build:api": "mvn -B -f apps/api/pom.xml package -DskipTests",
+    "test": "npm run test:api && npm run test -w apps/web",
+    "test:api": "mvn -B -f apps/api/pom.xml verify",
+    "typecheck": "npm run typecheck -w apps/web",
+    "format": "prettier --write \"apps/web/**/*.{ts,tsx,css,json}\""
   },
   "devDependencies": {
     "concurrently": "9.1.0",
